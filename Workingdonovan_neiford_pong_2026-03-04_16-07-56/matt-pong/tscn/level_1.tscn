@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://duyelmsd7csbf"]
+
+[ext_resource type="Script" uid="uid://c8evwcboemqsr" path="res://level_1.gd" id="1_3kf8w"]
+[ext_resource type="PackedScene" uid="uid://cvng7gv8xexxo" path="res://tscn/ball.tscn" id="1_ou3g8"]
+[ext_resource type="PackedScene" uid="uid://4hqha242pudl" path="res://tscn/player.tscn" id="2_3kf8w"]
+[ext_resource type="PackedScene" uid="uid://bkvkbt72og5by" path="res://tscn/computer.tscn" id="3_w33rq"]
+[ext_resource type="Texture2D" uid="uid://d1u3vj37ecccv" path="res://assets/Board.png" id="5_w33rq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ou3g8"]
+size = Vector2(77, 664)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kf8w"]
+size = Vector2(71, 675)
+
+[node name="level_1" type="Node2D" unique_id=802589775]
+script = ExtResource("1_3kf8w")
+
+[node name="background" type="Sprite2D" parent="." unique_id=612436862]
+position = Vector2(576, 324)
+scale = Vector2(1.4364089, 1.4241755)
+texture = ExtResource("5_w33rq")
+
+[node name="ball" parent="." unique_id=2125329623 instance=ExtResource("1_ou3g8")]
+position = Vector2(556, 325)
+
+[node name="player" parent="." unique_id=754285079 instance=ExtResource("2_3kf8w")]
+position = Vector2(100, 325)
+
+[node name="computer" parent="." unique_id=1772208346 node_paths=PackedStringArray("ball") instance=ExtResource("3_w33rq")]
+position = Vector2(1052, 325)
+ball = NodePath("../ball")
+
+[node name="computergoal" type="Area2D" parent="." unique_id=1596046946]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="computergoal" unique_id=1869125990]
+position = Vector2(16.5, 322)
+shape = SubResource("RectangleShape2D_ou3g8")
+
+[node name="playergoal" type="Area2D" parent="." unique_id=186075176]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="playergoal" unique_id=870829541]
+position = Vector2(1140.5, 327.5)
+shape = SubResource("RectangleShape2D_3kf8w")
+
+[node name="computerscore" type="Label" parent="." unique_id=719018150]
+offset_left = 824.0
+offset_top = 51.0
+offset_right = 967.0
+offset_bottom = 77.0
+text = "Computer Score"
+horizontal_alignment = 1
+
+[node name="playerscore" type="Label" parent="." unique_id=1517787032]
+offset_left = 187.0
+offset_top = 40.0
+offset_right = 292.0
+offset_bottom = 70.0
+text = "Player Score"
+
+[connection signal="computer_goal" from="ball" to="." method="_on_ball_computer_goal"]
+[connection signal="player_goal" from="ball" to="." method="_on_ball_player_goal"]
